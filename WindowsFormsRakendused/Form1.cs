@@ -26,9 +26,11 @@ namespace WindowsFormsRakendused
         ColorDialog colorDialog1;
         public Form1()
         {
-            //InitializeComponent();
-
-
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(800, 450);
+            this.Name = "Form1";
+            this.Text = "Piltide vaatamine";
             TableLayoutPanel tableLayoutPanel1 = new TableLayoutPanel
             {
                 ColumnCount = 2,                
@@ -63,14 +65,12 @@ namespace WindowsFormsRakendused
                 Name = "checkBox1",
                 Size = new Size(104, 24),
                 TabIndex = 1,
-                Text = "Venitada",
-                
+                Text = "Venitada",                
             };
-            checkBox1.CheckedChanged += new EventHandler(this.checkbox1_CheckedChanged);
+            checkBox1.CheckedChanged += checkbox1_CheckedChanged;
 
             FlowLayoutPanel flowLayoutPanel1 = new FlowLayoutPanel
-            {
-                
+            {                
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.RightToLeft,
                 Location = new Point(123, 408),
@@ -93,7 +93,7 @@ namespace WindowsFormsRakendused
             };
             showButton.Click += ShowButton_Click;
 
-            Button clearButton = new Button()
+            Button clearButton = new Button
             {
                 AutoSize = true,
                 Location = new Point(475, 3),
@@ -106,7 +106,7 @@ namespace WindowsFormsRakendused
             };
             clearButton.Click += clearButton_Click;
             
-            Button backgroundButton = new Button()
+            Button backgroundButton = new Button
             {
                 AutoSize = true,
                 Location = new Point(357, 3),
@@ -118,7 +118,7 @@ namespace WindowsFormsRakendused
             };
             backgroundButton.Click += backgroundButton_Click;
 
-            Button closeButton = new Button()
+            Button closeButton = new Button
             {
                 AutoSize = true,
                 Location = new Point(276, 3),
@@ -130,37 +130,31 @@ namespace WindowsFormsRakendused
             };
             closeButton.Click += closeButton_Click;
 
-            OpenFileDialog openFileDialog1 = new OpenFileDialog()
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
             {
                 FileName = "openFileDialog1",
                 Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All files (*.*)|*.*",
             };
 
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(800, 450);
-            this.Controls.Add(tableLayoutPanel1);
-            this.Name = "Form1";
-            this.Text = "Piltide vaatamine";
-            tableLayoutPanel1.ResumeLayout(false);
-            ((ISupportInitialize)(pictureBox1)).EndInit();
-            flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
-            this.ResumeLayout(false);
+            //tableLayoutPanel1.SuspendLayout();
+            //((ISupportInitialize)(pictureBox1)).BeginInit();
+            //flowLayoutPanel1.SuspendLayout();
+            //this.SuspendLayout();
+
+            //tableLayoutPanel1.ResumeLayout(false);
+            //((ISupportInitialize)(pictureBox1)).EndInit();
+            //flowLayoutPanel1.ResumeLayout(false);
+            //flowLayoutPanel1.PerformLayout();
+            //this.ResumeLayout(false);
             
-            tableLayoutPanel1.SuspendLayout();
-            ((ISupportInitialize)(pictureBox1)).BeginInit();
-            flowLayoutPanel1.SuspendLayout();
-            this.SuspendLayout();
-
-
+            this.Controls.Add(tableLayoutPanel1);
             this.Controls.Add(pictureBox1);
             this.Controls.Add(checkBox1);
             this.Controls.Add(flowLayoutPanel1);
             this.Controls.Add(showButton);
             this.Controls.Add(clearButton);
             this.Controls.Add(backgroundButton);
-            this.Controls.Add(closeButton);
+            this.Controls.Add(closeButton);            
         }
 
 
