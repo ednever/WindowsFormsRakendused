@@ -26,12 +26,13 @@ namespace WindowsFormsRakendused
         ColorDialog colorDialog1;
         public Form1()
         {
+            
             this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(800, 450);
             this.Name = "Form1";
             this.Text = "Piltide vaatamine";
-            TableLayoutPanel tableLayoutPanel1 = new TableLayoutPanel
+            tableLayoutPanel1 = new TableLayoutPanel
             {
                 ColumnCount = 2,                
                 Dock = DockStyle.Fill,
@@ -45,11 +46,10 @@ namespace WindowsFormsRakendused
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 85F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 90F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            
 
-            PictureBox pictureBox1 = new PictureBox
+            pictureBox1 = new PictureBox
             {
-                BorderStyle = BorderStyle.Fixed3D,                
+                BorderStyle = BorderStyle.Fixed3D,
                 Dock = DockStyle.Fill,
                 Location = new Point(3, 3),
                 Name = "pictureBox1",
@@ -59,18 +59,18 @@ namespace WindowsFormsRakendused
             };
             tableLayoutPanel1.SetColumnSpan(pictureBox1, 2);
 
-            CheckBox checkBox1 = new CheckBox
+            checkBox1 = new CheckBox
             {
                 Location = new Point(3, 408),
                 Name = "checkBox1",
                 Size = new Size(104, 24),
                 TabIndex = 1,
-                Text = "Venitada",                
+                Text = "Venitada",
             };
             checkBox1.CheckedChanged += checkbox1_CheckedChanged;
 
-            FlowLayoutPanel flowLayoutPanel1 = new FlowLayoutPanel
-            {                
+            flowLayoutPanel1 = new FlowLayoutPanel
+            {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.RightToLeft,
                 Location = new Point(123, 408),
@@ -78,9 +78,10 @@ namespace WindowsFormsRakendused
                 Size = new Size(674, 39),
                 TabIndex = 2,
             };
-            
+            flowLayoutPanel1.Controls.Add(checkBox1);
 
-            Button showButton = new Button
+
+            showButton = new Button
             {
                 AutoSize = true,
                 Location = new Point(596, 3),
@@ -89,11 +90,11 @@ namespace WindowsFormsRakendused
                 TabIndex = 0,
                 Text = "Näita pilt",
                 UseVisualStyleBackColor = true,
-                
-            };
-            showButton.Click += ShowButton_Click;
 
-            Button clearButton = new Button
+            };
+            showButton.Click += Tegevus;
+
+            clearButton = new Button
             {
                 AutoSize = true,
                 Location = new Point(475, 3),
@@ -102,11 +103,11 @@ namespace WindowsFormsRakendused
                 TabIndex = 1,
                 Text = "Tühjenda pilt",
                 UseVisualStyleBackColor = true,
-                
+
             };
-            clearButton.Click += clearButton_Click;
-            
-            Button backgroundButton = new Button
+            clearButton.Click += Tegevus;
+
+            backgroundButton = new Button
             {
                 AutoSize = true,
                 Location = new Point(357, 3),
@@ -114,11 +115,11 @@ namespace WindowsFormsRakendused
                 Size = new Size(112, 23),
                 TabIndex = 2,
                 Text = "Määrake taustavärv",
-                UseVisualStyleBackColor = true,              
+                UseVisualStyleBackColor = true,
             };
             backgroundButton.Click += backgroundButton_Click;
 
-            Button closeButton = new Button
+            closeButton = new Button
             {
                 AutoSize = true,
                 Location = new Point(276, 3),
@@ -126,27 +127,27 @@ namespace WindowsFormsRakendused
                 Size = new Size(75, 23),
                 TabIndex = 3,
                 Text = "Sulge",
-                UseVisualStyleBackColor = true,                
+                UseVisualStyleBackColor = true,
             };
-            closeButton.Click += closeButton_Click;
+            closeButton.Click += Tegevus;
 
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            openFileDialog1 = new OpenFileDialog
             {
                 FileName = "openFileDialog1",
                 Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All files (*.*)|*.*",
             };
 
-            //tableLayoutPanel1.SuspendLayout();
-            //((ISupportInitialize)(pictureBox1)).BeginInit();
-            //flowLayoutPanel1.SuspendLayout();
-            //this.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            ((ISupportInitialize)(pictureBox1)).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
+            this.SuspendLayout();
 
-            //tableLayoutPanel1.ResumeLayout(false);
-            //((ISupportInitialize)(pictureBox1)).EndInit();
-            //flowLayoutPanel1.ResumeLayout(false);
-            //flowLayoutPanel1.PerformLayout();
-            //this.ResumeLayout(false);
-            
+            tableLayoutPanel1.ResumeLayout(false);
+            ((ISupportInitialize)(pictureBox1)).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
+            this.ResumeLayout(false);
+
             this.Controls.Add(tableLayoutPanel1);
             this.Controls.Add(pictureBox1);
             this.Controls.Add(checkBox1);
@@ -154,38 +155,37 @@ namespace WindowsFormsRakendused
             this.Controls.Add(showButton);
             this.Controls.Add(clearButton);
             this.Controls.Add(backgroundButton);
-            this.Controls.Add(closeButton);            
+            this.Controls.Add(closeButton);
         }
-
-
-        private void ShowButton_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) 
-                pictureBox1.Load(openFileDialog1.FileName);
-        }
-
-        private void clearButton_Click(object sender, EventArgs e)
-        {
-            pictureBox1.Image = null;
-        }
-
         private void backgroundButton_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK) 
                 pictureBox1.BackColor = colorDialog1.Color;
         }
-
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void checkbox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             else
                 pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+        }
+        private void Tegevus(object sender, EventArgs e)
+        {
+            Button nupp_sender = (Button)sender;
+            if (nupp_sender.Text == "Näita")
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                    pictureBox1.Load(openFileDialog1.FileName);
+            }
+            else if (nupp_sender.Text == "Kustuta")
+            {
+                pictureBox1.Image = null;
+
+            }
+            else if (nupp_sender.Text == "Kinni")
+            {
+                this.Close();
+            }
         }
     }
 }
