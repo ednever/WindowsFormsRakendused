@@ -14,8 +14,8 @@ namespace WindowsFormsRakendused
     {
         TableLayoutPanel tableLayoutPanel1;
         Timer timer;
-        Label l;
-        string l_nimed[,];
+        Label timeLeft;
+        //string l_nimed[,];
         public Form2()
         {
             this.Text = "Math Quiz";
@@ -28,9 +28,17 @@ namespace WindowsFormsRakendused
             {
                 Dock = DockStyle.Fill,
             };
+            timeLeft = new Label
+            {
+                Size = new Size(101, 25),
+                Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
+                //Location = new Point(0, 0),
+                Location = new Point(165, 11),
+                Text = "Time Left",
+            };
 
 
-            l_nimed = new string[5, 4];
+            //l_nimed = new string[5, 4];
             //for (int i = 0; i < 4; i++)
             //{
             //    tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Persent, 25F));
@@ -59,43 +67,43 @@ namespace WindowsFormsRakendused
             //        TableLayoutPanel.Controls.Add(l, j, i);
             //    }
             //}
-            this.Controls.Add(tableLayoutPanel1);
+            //this.Controls.Add(tableLayoutPanel1);
+            this.Controls.Add(timeLeft);
         }
-        private bool CheckTheAnswer()
-        {
-            if ((addend1 + addend2 == sum.Value)
-                && (minuend - subtrahend == difference.Value)
-                && (multiplicand * multiplier == product.Value)
-                && (dividend / divisor == quotient.Value))
-                return true;
-            else
-                return false;
-        }
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (CheckTheAnswer())
-            {
-                timer1.Stop();
-                MessageBox.Show("You got all the answers right!",
-                                "Congratulations!");
-                startButton.Enabled = true;
-            }
-            else if (timeLeft > 0)
-            {
-                timeLeft = timeLeft - 1;
-                timeLabel.Text = timeLeft + " seconds";
-            }
-            else
-            {
-                timer1.Stop();
-                timeLabel.Text = "Time's up!";
-                MessageBox.Show("You didn't finish in time.", "Sorry!");
-                sum.Value = addend1 + addend2;
-                difference.Value = minuend - subtrahend;
-                product.Value = multiplicand * multiplier;
-                quotient.Value = dividend / divisor;
-                startButton.Enabled = true;
-            }
-        }
+        //private bool CheckTheAnswer()
+        //{
+        //    if ((addend1 + addend2 == sum.Value)
+        //        && (minuend - subtrahend == difference.Value)
+        //        && (multiplicand * multiplier == product.Value)
+        //        && (dividend / divisor == quotient.Value))
+        //        return true;
+        //    else
+        //        return false;
+        //}
+        //private void timer_Tick(object sender, EventArgs e)
+        //{
+        //    if (CheckTheAnswer())
+        //    {
+        //        timer.Stop();
+        //        MessageBox.Show("You got all the answers right!\nCongratulations!");
+        //        startButton.Enabled = true;
+        //    }
+        //    else if (timeLeft > 0)
+        //    {
+        //        timeLeft = timeLeft - 1;
+        //        timeLabel.Text = timeLeft + " seconds";
+        //    }
+        //    else
+        //    {
+        //        timer.Stop();
+        //        timeLabel.Text = "Time's up!";
+        //        MessageBox.Show("You didn't finish in time.", "Sorry!");
+        //        sum.Value = addend1 + addend2;
+        //        difference.Value = minuend - subtrahend;
+        //        product.Value = multiplicand * multiplier;
+        //        quotient.Value = dividend / divisor;
+        //        startButton.Enabled = true;
+        //    }
+        //}
     }
 }
