@@ -18,43 +18,60 @@ namespace WindowsFormsRakendused
         Button startButton;
 
         NumericUpDown[] vastused = new NumericUpDown[4];
-        string text;
+        
         int[] num1 = new int[4];
         int[] num2 = new int[4];
+
+        string text;
         public Form2()
         {
-            this.Text = "Math Quiz";
-            this.Name = "Form2";
-            this.ClientSize = new Size(800, 450);
+            this.Text = "Matemaatika test";
+            //this.Name = "Form2";
+            this.ClientSize = new Size(500, 400);
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+
             string[] tehed;
+
             Random rnd = new Random();
 
             tableLayoutPanel1 = new TableLayoutPanel
             {
                 Name = "Timer",
-                Location = new Point(100, 36),
-                Size = new Size(250, 250),
+                Location = new Point(0, 150),
+                Size = new Size(500, 250),
                 Font = new Font("Microsoft Sans Serif", 10.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
-                BackColor = Color.AntiqueWhite,
+                BackColor = Color.CornflowerBlue,
             };
 
             timeLeft = new Label
             {
-                Size = new Size(101, 25),
+                Location = new Point(0,0),
+                AutoSize = false,
+                Size = new Size(200, 30),
                 Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
-                Location = new Point(165, 11),
                 Text = "Time Left",                
+            };
+
+            timeLabel = new Label
+            {
+                Location = new Point(200, 0),
+                AutoSize = false,
+                Size = new Size(200, 30),
+                Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
+                Text = "Timer:",
             };
 
             startButton = new Button
             {
                 Text = "Lõpeta",
-                Location = new Point(0, 0),
+                Location = new Point(400, 0),
             };
+
             startButton.Click += pp;
 
             tehed = new string[4] { "+", "-", "/", "*" };
+
             for (int i = 0; i < 4; i++)
             {
                 tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
@@ -63,7 +80,7 @@ namespace WindowsFormsRakendused
                     tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
                     if (j == 0)
                     {
-                        if ((tehed[i] == "/" || tehed[i] == "/") && j == 2)
+                        if ((tehed[i] == "/" || tehed[i] == "*") && j == 2)
                         {
                             text = rnd.Next(1, 10).ToString();
                             num1[i] = int.Parse(text);
@@ -80,10 +97,10 @@ namespace WindowsFormsRakendused
                     }
                     else if (j == 2)
                     {
-                        if ((tehed[i] == "/" || tehed[i] == "/") && j == 2)
+                        if ((tehed[i] == "/" || tehed[i] == "*") && j == 2)
                         {
                             text = rnd.Next(1, 10).ToString();
-                            num1[i] = int.Parse(text);
+                            num2[i] = int.Parse(text);
                         }
                         else
                         {
@@ -99,33 +116,44 @@ namespace WindowsFormsRakendused
                     {
                         vastused[i] = new NumericUpDown
                         {
-                            //Name = tehed[i],
-                            DecimalPlaces = 1,
+                            Name = tehed[i],
+                            DecimalPlaces = 2,
                             Minimum = -10,
-                            Size = new Size(250, 250),
-                            Font = new Font("Microsoft Sans Serif", 10.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
+                            Size = new Size(100,50),
+                            Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
                         };
-                        tableLayoutPanel1.Controls.Add(vastused[i], i, j);
-                    }                    
-                    Label l = new Label { Text = text };
-                    tableLayoutPanel1.Controls.Add(l, i, j);
+                        tableLayoutPanel1.Controls.Add(vastused[i], j, i);
+                    }  
+                    
+                    Label l = new Label 
+                    {
+                        AutoSize = false,
+                        Size = new Size(60, 50),
+                        Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Text = text,
+                        BackColor = Color.CornflowerBlue,
+                    };
+
+                    tableLayoutPanel1.Controls.Add(l, j, i);
                 }
             }
 
-            timer = new Timer();
-            timer.Start();
+            timer = new Timer { Interval = 750 };
             timer.Tick += timer_Tick;
+            timer.Start();
 
             this.Controls.Add(tableLayoutPanel1);
             this.Controls.Add(timeLeft);
             this.Controls.Add(startButton);
+            this.Controls.Add(timeLabel);
         }
         private bool CheckTheAnswer()
         {
             if ((num1[0] + num2[0] == vastused[0].Value) 
                 && (num1[1] - num2[1] == vastused[1].Value) 
-                && (num1[2] * num2[2] == vastused[2].Value)
-                && (num1[3] / num2[3] == vastused[3].Value))
+                && (num1[2] / num2[2] == vastused[2].Value)
+                && (num1[3] * num2[3] == vastused[3].Value))
                 return true;
             else
                 return false;
@@ -134,14 +162,7 @@ namespace WindowsFormsRakendused
         private void timer_Tick(object sender, EventArgs e)
         {
             tik++;
-            timeLabel = new Label
-            {
-                Text = tik.ToString(),
-                Size = new Size(101, 25),
-                Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
-                Location = new Point(266, 11),
-            };
-            this.Controls.Add(timeLabel);
+            timeLabel.Text = "Timer: " + tik.ToString();
         }
         void pp(object sender, EventArgs e)
         {
@@ -150,17 +171,18 @@ namespace WindowsFormsRakendused
                 timer.Stop();
                 MessageBox.Show("Kõik vastused on õiged!\nPalju õnne!");
                 startButton.Enabled = true;
+                Close();
             }
             else
             {
                 timer.Stop();
-                timeLabel.Text = "Time's up!";
+                timeLabel.Text = "Aeg on läbi!";
                 MessageBox.Show("Kõik vastused pole õiged!\nTee uuesti!");
                 vastused[0].Value = num1[0] + num2[0];
                 vastused[1].Value = num1[1] - num2[1];
-                vastused[2].Value = num1[2] * num2[2];
-                vastused[3].Value = num1[3] / num2[3];
-                startButton.Enabled = true;
+                vastused[2].Value = num1[2] / num2[2];
+                vastused[3].Value = num1[3] * num2[3];
+                startButton.Enabled = true;                
             }
         }
     }

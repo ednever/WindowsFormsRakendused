@@ -20,15 +20,13 @@ namespace WindowsFormsRakendused
             "b", "b", "v", "v", "w", "w", "z", "z"
         };
         Label firstClicked, secondClicked = null;
-        //Label  = null;
         Timer timer;
         public Form3()
         {
             this.components = new Container();
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(550, 500);
-            this.Text = "Matching Game";
-            
+            this.Text = "Sobivus mäng";           
 
             tableLayoutPanel1 = new TableLayoutPanel
             {
@@ -39,8 +37,7 @@ namespace WindowsFormsRakendused
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset,
                 AutoSize = false,
                 
-            };
-            timer = new Timer { Interval = 750};
+            };            
 
             for (int i = 0; i < 4; i++)
             {
@@ -58,12 +55,13 @@ namespace WindowsFormsRakendused
                     l.Click += label_Click;
                 }
             }
-            timer.Start();
-            AssignIconsToSquares();
+            timer = new Timer { Interval = 750 };
+            timer.Tick += timer_Tick;
+            maaraIkoonidRuutudesse();
             this.Controls.Add(tableLayoutPanel1);
         }
 
-        void AssignIconsToSquares()
+        void maaraIkoonidRuutudesse()
         {
             foreach (Control control in tableLayoutPanel1.Controls)
             {
@@ -79,6 +77,8 @@ namespace WindowsFormsRakendused
         }
         void label_Click(object sender, EventArgs e)
         {
+            if (timer.Enabled == true) 
+                return;
             Label clickedLabel = sender as Label;
 
             if (clickedLabel != null)
@@ -89,20 +89,41 @@ namespace WindowsFormsRakendused
                 {
                     firstClicked = clickedLabel;
                     firstClicked.ForeColor = Color.Black;
-
                     return;
                 }
+                secondClicked = clickedLabel;
+                secondClicked.ForeColor = Color.Black;
+                voiduKontroll();
+                if (firstClicked.Text == secondClicked.Text)
+                {
+                    firstClicked = null;
+                    secondClicked = null;
+                    return;
+                }                
+                timer.Start();
             }
         }
-        void timer1_Tick(object sender, EventArgs e)
+        void timer_Tick(object sender, EventArgs e)
         {
             timer.Stop();
-
             firstClicked.ForeColor = firstClicked.BackColor;
             secondClicked.ForeColor = secondClicked.BackColor;
-
             firstClicked = null;
             secondClicked = null;
+        }
+        void voiduKontroll()
+        {
+            foreach (Control control in tableLayoutPanel1.Controls)
+            {
+                Label iconLabel = control as Label;
+                if (iconLabel != null)
+                {
+                    if (iconLabel.ForeColor == iconLabel.BackColor)
+                        return;
+                }
+            }
+            MessageBox.Show("Sa otsisid välja kõik ikoonid", "Palju õnne");
+            Close();
         }
     }
 }
