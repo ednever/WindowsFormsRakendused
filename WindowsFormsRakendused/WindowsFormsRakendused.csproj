@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AvaVorm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AvaVorm.Designer.cs">
+      <DependentUpon>AvaVorm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
