@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace WindowsFormsRakendused
 {
     public partial class Form3 : Form
-    {
+    {        
         TableLayoutPanel tableLayoutPanel1;
         Random random = new Random();
         List<string> icons = new List<string>()
@@ -20,24 +20,34 @@ namespace WindowsFormsRakendused
             "b", "b", "v", "v", "w", "w", "z", "z"
         };
         Label firstClicked, secondClicked = null;
+        Label timerLabel;
         Timer timer;
+        
         public Form3()
         {
             this.components = new Container();
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(550, 500);
-            this.Text = "Sobivus mäng";           
+            this.ClientSize = new Size(550, 530);
+            this.Text = "Sobivus mäng";
+            MessageBox.Show("Sul on kokku 10 katsed", "Sobivus mäng");
 
             tableLayoutPanel1 = new TableLayoutPanel
             {
-                Location = new Point(0, 0),
+                Location = new Point(0, 30),
                 Size = new Size(550, 500),
                 Font = new Font("Microsoft Sans Serif", 10.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
                 BackColor = Color.CornflowerBlue,                
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset,
                 AutoSize = false,
                 
-            };            
+            };
+
+            timerLabel = new Label
+            {
+                Location = new Point(225, 0),
+                Size = new Size(100, 30),
+                Text = "Katsed: "
+            };
 
             for (int i = 0; i < 4; i++)
             {
@@ -55,10 +65,12 @@ namespace WindowsFormsRakendused
                     l.Click += label_Click;
                 }
             }
+            
             timer = new Timer { Interval = 750 };
             timer.Tick += timer_Tick;
             maaraIkoonidRuutudesse();
             this.Controls.Add(tableLayoutPanel1);
+            this.Controls.Add(timerLabel);            
         }
 
         void maaraIkoonidRuutudesse()
@@ -76,7 +88,7 @@ namespace WindowsFormsRakendused
             }
         }
         void label_Click(object sender, EventArgs e)
-        {
+        {            
             if (timer.Enabled == true) 
                 return;
             Label clickedLabel = sender as Label;
@@ -103,13 +115,21 @@ namespace WindowsFormsRakendused
                 timer.Start();
             }
         }
+        int tik = 0;
         void timer_Tick(object sender, EventArgs e)
         {
+            tik++;
             timer.Stop();
             firstClicked.ForeColor = firstClicked.BackColor;
             secondClicked.ForeColor = secondClicked.BackColor;
             firstClicked = null;
             secondClicked = null;
+            timerLabel.Text = "Katsed: " + tik.ToString();
+            if (tik >= 10)
+            {
+                MessageBox.Show("Sa kasutasid kõiki katset!","GAME OVER");
+                Close();
+            }
         }
         void voiduKontroll()
         {
