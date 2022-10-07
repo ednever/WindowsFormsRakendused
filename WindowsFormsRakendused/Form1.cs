@@ -18,7 +18,7 @@ namespace WindowsFormsRakendused
         PictureBox pictureBox1;
         CheckBox checkBox1;
         FlowLayoutPanel flowLayoutPanel1;
-        Button naita, puhasta, taustvarv, sulgeNupp;        
+        Button naita, puhasta, taustvarv, sulge;        
         OpenFileDialog openFileDialog1;
         ColorDialog colorDialog1;
         public Form1()
@@ -26,10 +26,10 @@ namespace WindowsFormsRakendused
             this.Text = "Piltide vaatamine";
             this.ClientSize = new Size(800, 450);
 
-            Button[] nuppud = new Button[4] { naita, puhasta, taustvarv, sulgeNupp };
+            Button[] nuppud = new Button[4] { naita, puhasta, taustvarv, sulge }; //massiiv nuppudest
             string[] text = new string[4] { "Näita", "Puhasta", "Taustavärv", "Sulge" };
 
-            tableLayoutPanel1 = new TableLayoutPanel
+            tableLayoutPanel1 = new TableLayoutPanel //tabeli loomine
             {
                 ColumnCount = 2,                
                 Dock = DockStyle.Fill,
@@ -43,7 +43,7 @@ namespace WindowsFormsRakendused
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 90F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
 
-            pictureBox1 = new PictureBox
+            pictureBox1 = new PictureBox // pildikasti loomine
             {
                 BorderStyle = BorderStyle.Fixed3D,
                 Dock = DockStyle.Fill,
@@ -51,7 +51,7 @@ namespace WindowsFormsRakendused
             };
             tableLayoutPanel1.SetColumnSpan(this.pictureBox1, 2);
 
-            checkBox1 = new CheckBox
+            checkBox1 = new CheckBox // märkeruudu loomine
             {
                 AutoSize = true,
                 Size = new Size(68, 20),
@@ -59,14 +59,14 @@ namespace WindowsFormsRakendused
             };
             checkBox1.CheckedChanged += checkBox1_CheckedChanged;
 
-            flowLayoutPanel1 = new FlowLayoutPanel
+            flowLayoutPanel1 = new FlowLayoutPanel // voolu paigutuse paneli loomine
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.RightToLeft,
                 Size = new Size(674, 39),
             };
 
-            openFileDialog1 = new OpenFileDialog
+            openFileDialog1 = new OpenFileDialog // ava failidialoogi loomine
             {
                 Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All files (*.*)|*.*"
             };
@@ -77,7 +77,7 @@ namespace WindowsFormsRakendused
             tableLayoutPanel1.Controls.Add(checkBox1, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 1);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++) //nuppude loomise tsükkel
             {
                 nuppud[i] = new Button
                 {
@@ -88,7 +88,7 @@ namespace WindowsFormsRakendused
                 flowLayoutPanel1.Controls.Add(nuppud[i]);
             }
         }
-        void Tegevus(object sender, EventArgs e)
+        void Tegevus(object sender, EventArgs e) //nuppude kontroll
         {
             Button nupp = (Button)sender;
             if (nupp.Text == "Näita")
@@ -110,7 +110,7 @@ namespace WindowsFormsRakendused
                 this.Close();
             }                    
         }
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) //märkeruudu kontroll
         {
             if (checkBox1.Checked)
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;

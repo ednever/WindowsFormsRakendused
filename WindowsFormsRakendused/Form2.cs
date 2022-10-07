@@ -35,8 +35,8 @@ namespace WindowsFormsRakendused
 
             tableLayoutPanel1 = new TableLayoutPanel
             {
-                ColumnCount = 5,
-                RowCount = 4,
+                //ColumnCount = 5,
+                //RowCount = 4,
                 Location = new Point(0, 150),
                 Size = new Size(500, 250),
                 Font = new Font("Microsoft Sans Serif", 10.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
@@ -104,8 +104,6 @@ namespace WindowsFormsRakendused
                             text = rnd.Next(1, 20).ToString();
                             num2[i] = int.Parse(text);
                         }
-                        text = rnd.Next(1, 10).ToString();
-                        num2[i] = int.Parse(text);
                     }
                     else if (j == 3)
                     {
@@ -123,7 +121,6 @@ namespace WindowsFormsRakendused
                         };
                         tableLayoutPanel1.Controls.Add(vastused[i], j, i);
                     }
-                    
                     Label l = new Label
                     {
                         AutoSize = false,
@@ -133,8 +130,7 @@ namespace WindowsFormsRakendused
                         Text = text,
                         BackColor = Color.CornflowerBlue,
                     };
-                    tableLayoutPanel1.Controls.Add(l, j, i);
-                    
+                    tableLayoutPanel1.Controls.Add(l, j, i);                    
                 }
             }
 
@@ -147,7 +143,7 @@ namespace WindowsFormsRakendused
             this.Controls.Add(startButton);
             this.Controls.Add(timeLabel);
         }
-        private bool CheckTheAnswer()
+        private bool CheckTheAnswer() // vastuste kontroll
         {
             if ((num1[0] + num2[0] == vastused[0].Value)
                 && (num1[1] - num2[1] == vastused[1].Value)
@@ -163,19 +159,19 @@ namespace WindowsFormsRakendused
             tik++;
             timeLabel.Text = "Timer: " + tik.ToString();
         }
-        void startButton_Click(object sender, EventArgs e)
+        void startButton_Click(object sender, EventArgs e) //vastuste kontroll
         {
-            if (CheckTheAnswer())
+            if (CheckTheAnswer()) // kui vastused on õiged
             {
                 timer.Stop();
                 MessageBox.Show("Kõik vastused on õiged!\nPalju õnne!");
                 startButton.Enabled = true;
                 Close();
             }
-            else
+            else // kui vastused ei ole õiged vastuste lahtristesse kirjutatakse õiged vastused
             {
                 timer.Stop();
-                MessageBox.Show("Kõik vastused pole õiged!\nVaata õiged vastused!");
+                MessageBox.Show("Kõik vastused ei ole õiged!\nVaata õiged vastused!");
                 vastused[0].Value = num1[0] + num2[0];
                 vastused[1].Value = num1[1] - num2[1];
                 vastused[2].Value = num1[2] / num2[2];

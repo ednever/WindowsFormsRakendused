@@ -142,7 +142,7 @@ namespace WindowsFormsRakendused
                         return;
                 }
             }
-            MessageBox.Show("Sa otsisid välja kõik ikoonid", "Palju õnne");
+            MessageBox.Show("Sa otsisid välja kõik ikoonid", "Palju õnne!");
             Close();
         }
     }

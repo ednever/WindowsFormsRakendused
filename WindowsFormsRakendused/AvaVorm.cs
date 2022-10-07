@@ -12,7 +12,7 @@ namespace WindowsFormsRakendused
 {
     public partial class AvaVorm : Form
     {
-        Form[] vormid = new Form[3] {new Form1(), new Form2(),new Form3()};
+        Form[] vormid = new Form[3] {new Form1(), new Form2(),new Form3()}; //massiiv vormidest
         string[] text = new string[3] { "Piltide vaatamine", "Matemaatika test", "Sobivus mäng" };
         public AvaVorm()
         {
@@ -21,8 +21,7 @@ namespace WindowsFormsRakendused
             this.BackColor = Color.BlanchedAlmond;
             int y = 0;
             for (int i = 0; i < 3; i++)
-            {
-                
+            {                
                 Button openButton = new Button
                 {
                     Size = new Size(200,30),
@@ -40,7 +39,7 @@ namespace WindowsFormsRakendused
             for (int i = 0; i < 3; i++)
             {
                 if (nupp.Text == text[i])
-                    vormid[i].ShowDialog();
+                    vormid[i].ShowDialog(); //avab vormi vormide massiivist 
             }            
         }
     }
