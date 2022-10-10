@@ -18,16 +18,17 @@ namespace WindowsFormsRakendused
         PictureBox pictureBox1;
         CheckBox checkBox1;
         FlowLayoutPanel flowLayoutPanel1;
-        Button naita, puhasta, taustvarv, sulge;        
+        Button naita, puhasta, taustvarv, sulge, joonista;        
         OpenFileDialog openFileDialog1;
         ColorDialog colorDialog1;
+        
         public Form1()
         {
             this.Text = "Piltide vaatamine";
             this.ClientSize = new Size(800, 450);
 
-            Button[] nuppud = new Button[4] { naita, puhasta, taustvarv, sulge }; //massiiv nuppudest
-            string[] text = new string[4] { "Näita", "Puhasta", "Taustavärv", "Sulge" };
+            Button[] nuppud = new Button[5] { naita, puhasta, taustvarv, sulge , joonista}; //massiiv nuppudest
+            string[] text = new string[5] { "Näita", "Puhasta", "Taustavärv", "Sulge", "Joonista" };
 
             tableLayoutPanel1 = new TableLayoutPanel //tabeli loomine
             {
@@ -48,9 +49,11 @@ namespace WindowsFormsRakendused
                 BorderStyle = BorderStyle.Fixed3D,
                 Dock = DockStyle.Fill,
                 Size = new Size(794, 399),
+                
             };
             tableLayoutPanel1.SetColumnSpan(this.pictureBox1, 2);
-
+            pictureBox1.MouseDoubleClick += pictureBox1_MouseDoubleClick;
+          
             checkBox1 = new CheckBox // märkeruudu loomine
             {
                 AutoSize = true,
@@ -77,7 +80,7 @@ namespace WindowsFormsRakendused
             tableLayoutPanel1.Controls.Add(checkBox1, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 1);
 
-            for (int i = 0; i < 4; i++) //nuppude loomise tsükkel
+            for (int i = 0; i < 5; i++) //nuppude loomise tsükkel
             {
                 nuppud[i] = new Button
                 {
@@ -108,14 +111,37 @@ namespace WindowsFormsRakendused
             else if (nupp.Text == "Sulge")
             {
                 this.Close();
-            }                    
+            }
+            else if (nupp.Text == "Joonista")
+            {
+                pictureBox1.Paint += pictureBox1_Paint;
+            }
         }
-        private void checkBox1_CheckedChanged(object sender, EventArgs e) //märkeruudu kontroll
+        void checkBox1_CheckedChanged(object sender, EventArgs e) //märkeruudu kontroll
         {
             if (checkBox1.Checked)
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             else
                 pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
         }
-    }
+        void pictureBox1_MouseDoubleClick(object sender, EventArgs e)
+        {
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            
+        }
+        void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            Rectangle ee = new Rectangle(0, 0, 794, 399);
+            Graphics gr = Graphics.FromImage(pictureBox1.Image);
+            using (Pen pen = new Pen(Color.Black, 2))
+            {
+                gr.DrawRectangle(pen, ee);
+            }
+            this.Refresh();
+        }
+        void paintOnPictureBox(object sender, EventArgs e)
+        {
+            pictureBox1.Paint += pictureBox1_Paint;
+        }
+    }    
 }
