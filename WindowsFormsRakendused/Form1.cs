@@ -18,17 +18,22 @@ namespace WindowsFormsRakendused
         PictureBox pictureBox1;
         CheckBox checkBox1;
         FlowLayoutPanel flowLayoutPanel1;
-        Button naita, puhasta, taustvarv, sulge, joonista;        
+        Button naita, puhasta, taustvarv, sulge, joonista, salvesta;        
         OpenFileDialog openFileDialog1;
         ColorDialog colorDialog1;
-        
+
+        Pen pen;
+        Graphics g;
+        bool moving = false;
+        int x, y = -1;
+
         public Form1()
         {
             this.Text = "Piltide vaatamine";
             this.ClientSize = new Size(800, 450);
 
-            Button[] nuppud = new Button[5] { naita, puhasta, taustvarv, sulge , joonista}; //massiiv nuppudest
-            string[] text = new string[5] { "Näita", "Puhasta", "Taustavärv", "Sulge", "Joonista" };
+            Button[] nuppud = new Button[6] { naita, puhasta, taustvarv, sulge , joonista, salvesta }; //massiiv nuppudest
+            string[] text = new string[6] { "Näita", "Puhasta", "Taustavärv", "Sulge", "Joonista" , "Salvesta" };
 
             tableLayoutPanel1 = new TableLayoutPanel //tabeli loomine
             {
@@ -80,7 +85,7 @@ namespace WindowsFormsRakendused
             tableLayoutPanel1.Controls.Add(checkBox1, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 1);
 
-            for (int i = 0; i < 5; i++) //nuppude loomise tsükkel
+            for (int i = 0; i < text.Length; i++) //nuppude loomise tsükkel
             {
                 nuppud[i] = new Button
                 {
@@ -113,8 +118,32 @@ namespace WindowsFormsRakendused
                 this.Close();
             }
             else if (nupp.Text == "Joonista")
+            {                
+                g = pictureBox1.CreateGraphics();
+                pen = new Pen(Color.Black, 5);
+
+                //pictureBox1.Paint += pictureBox1_Paint;
+
+                pictureBox1.MouseDown += pictureBox1_MouseDown;
+                pictureBox1.MouseMove += pictureBox1_MouseMove;
+                pictureBox1.MouseUp += pictureBox1_MouseUp;                
+            }
+            else if (nupp.Text == "Salvesta")
             {
-                pictureBox1.Paint += pictureBox1_Paint;
+                if (pictureBox1.Image != null) //если в pictureBox есть изображение
+                {
+                    try
+                    {
+                        // path - путь, который был выбран в FolderBrowserDialog()
+                        //image_name - имя для сохранения, можете сделать отдельный TextBox где будете сами его прописывать.
+                        pictureBox1.Image.Save("bow");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
         void checkBox1_CheckedChanged(object sender, EventArgs e) //märkeruudu kontroll
@@ -126,22 +155,35 @@ namespace WindowsFormsRakendused
         }
         void pictureBox1_MouseDoubleClick(object sender, EventArgs e)
         {
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;            
         }
-        void pictureBox1_Paint(object sender, PaintEventArgs e)
+
+        void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            Rectangle ee = new Rectangle(0, 0, 794, 399);
-            Graphics gr = Graphics.FromImage(pictureBox1.Image);
-            using (Pen pen = new Pen(Color.Black, 2))
+            moving = true;
+            x = e.X;
+            y = e.Y;
+        }
+
+        void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (moving && x != -1 && y != -1)
             {
-                gr.DrawRectangle(pen, ee);
+                g.DrawLine(pen, new Point(x, y), e.Location);
+                x = e.X;
+                y = e.Y;
             }
-            this.Refresh();
         }
-        void paintOnPictureBox(object sender, EventArgs e)
+
+        void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            pictureBox1.Paint += pictureBox1_Paint;
+            moving = false;
+            x = -1;
+            y = -1;
         }
+        //void pictureBox1_Paint(object sender, PaintEventArgs e)
+        //{
+        //    PictureBox p = (PictureBox)sender;
+        //}
     }    
 }

@@ -129,6 +129,7 @@ namespace WindowsFormsRakendused
             {
                 MessageBox.Show("Sa kasutasid kõiki katset!","GAME OVER");
                 Close();
+                this.Controls.Clear();
             }
         }
         void voiduKontroll()
