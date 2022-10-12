@@ -15,5 +15,3 @@ Form2 (Matemaatika test)
 Form3 (Sobivus mäng)
   1. Kokku on 10 katsed, kui kasutasid kõiki siis vorm sulgeb
   2. 
-
-https://www.youtube.com/watch?v=xyEG1e5Gnic
