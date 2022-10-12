@@ -1,5 +1,5 @@
 # WindowsFormsRakendused
-Informatsioon projekti arengust kohe tuleb. Praegu on kommentaarid eesti keeles projekti sees.
+Projekti sees on kommentaarid eesti keeles.
 ## Projekti arendused
 
 Form1 (Piltide vaatamine)
