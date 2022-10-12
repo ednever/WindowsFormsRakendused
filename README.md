@@ -9,7 +9,8 @@ Form1 (Piltide vaatamine)
 
 Form2 (Matemaatika test)
   1. Kui vastused ei ole õiged vastuste lahtristesse kirjutatakse õiged vastused
-  2. 
+  2. Kui test on avatud rohkeb kui 100 sekundid vorm sulgeb
+  3. 
   
 Form3 (Sobivus mäng)
   1. Kokku on 10 katsed, kui kasutasid kõiki siis vorm sulgeb
