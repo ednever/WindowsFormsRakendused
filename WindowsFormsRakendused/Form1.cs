@@ -21,7 +21,7 @@ namespace WindowsFormsRakendused
         Button naita, puhasta, taustvarv, sulge, joonista, salvesta;        
         OpenFileDialog openFileDialog1;
         ColorDialog colorDialog1;
-
+        
         Pen pen;
         Graphics g;
         bool moving = false;
@@ -58,7 +58,8 @@ namespace WindowsFormsRakendused
             };
             tableLayoutPanel1.SetColumnSpan(this.pictureBox1, 2);
             pictureBox1.MouseDoubleClick += pictureBox1_MouseDoubleClick;
-          
+            
+
             checkBox1 = new CheckBox // märkeruudu loomine
             {
                 AutoSize = true,
@@ -85,7 +86,7 @@ namespace WindowsFormsRakendused
             tableLayoutPanel1.Controls.Add(checkBox1, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 1);
 
-            for (int i = 0; i < text.Length; i++) //nuppude loomise tsükkel
+            for (int i = 0; i < 6; i++) //nuppude loomise tsükkel
             {
                 nuppud[i] = new Button
                 {
@@ -120,29 +121,48 @@ namespace WindowsFormsRakendused
             else if (nupp.Text == "Joonista")
             {                
                 g = pictureBox1.CreateGraphics();
+                //g.DrawImage(pictureBox1.Image, 0, 0);
                 pen = new Pen(Color.Black, 5);
 
                 //pictureBox1.Paint += pictureBox1_Paint;
 
                 pictureBox1.MouseDown += pictureBox1_MouseDown;
                 pictureBox1.MouseMove += pictureBox1_MouseMove;
-                pictureBox1.MouseUp += pictureBox1_MouseUp;                
+                pictureBox1.MouseUp += pictureBox1_MouseUp;
             }
             else if (nupp.Text == "Salvesta")
             {
                 if (pictureBox1.Image != null) //если в pictureBox есть изображение
                 {
-                    try
+                    g.Save();
+                    //using (Graphics g = Graphics.FromImage(pic))
+                    //{
+                    //PictureBox1_Render(g);
+                    Bitmap pic = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
+
+                    SaveFileDialog savedialog = new SaveFileDialog();
+                    savedialog.Title = "Salvesta pilt nimega...";
+
+                    savedialog.OverwritePrompt = true; //отображать ли предупреждение, если пользователь указывает имя уже существующего файла
+
+                    savedialog.CheckPathExists = true; //отображать ли предупреждение, если пользователь указывает несуществующий путь
+
+                    savedialog.Filter = "Image Files(*.BMP)|*.BMP|Image Files(*.JPG)|*.JPG|Image Files(*.GIF)|*.GIF|Image Files(*.PNG)|*.PNG|All files (*.*)|*.*"; //список форматов файла, отображаемый в поле "Тип файла"
+
+                    savedialog.ShowHelp = true; //отображается ли кнопка "Справка" в диалоговом окне
+
+                    if (savedialog.ShowDialog() == DialogResult.OK) //если в диалоговом окне нажата кнопка "ОК"
                     {
-                        // path - путь, который был выбран в FolderBrowserDialog()
-                        //image_name - имя для сохранения, можете сделать отдельный TextBox где будете сами его прописывать.
-                        pictureBox1.Image.Save("bow");
+                        try
+                        {
+                            pictureBox1.Image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Pole võimalik salvestada pilti", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
-                    catch
-                    {
-                        MessageBox.Show("Невозможно сохранить изображение", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    //}
                 }
             }
         }
@@ -157,14 +177,12 @@ namespace WindowsFormsRakendused
         {
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;            
         }
-
         void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             moving = true;
             x = e.X;
             y = e.Y;
         }
-
         void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (moving && x != -1 && y != -1)
@@ -174,16 +192,23 @@ namespace WindowsFormsRakendused
                 y = e.Y;
             }
         }
-
         void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             moving = false;
             x = -1;
             y = -1;
         }
-        //void pictureBox1_Paint(object sender, PaintEventArgs e)
+        //private void PictureBox1_Paint(object sender, PaintEventArgs e)
         //{
-        //    PictureBox p = (PictureBox)sender;
+        //    PictureBox1_Render(e.Graphics);
+        //}
+        //private void PictureBox1_Render(Graphics g)
+        //{
+        //    pictureBox1.MouseDown += pictureBox1_MouseDown;
+        //    pictureBox1.MouseMove += pictureBox1_MouseMove;
+        //    pictureBox1.MouseUp += pictureBox1_MouseUp;
+        //    draw things...         
+        //    g.DrawEllipse(Pens.Red, 0, 0, pictureBox1.ClientSize.Width - 1, pictureBox1.ClientSize.Height - 1);
         //}
     }    
 }

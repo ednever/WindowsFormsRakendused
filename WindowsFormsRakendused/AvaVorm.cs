@@ -43,7 +43,7 @@ namespace WindowsFormsRakendused
             }
             if (nupp.Text == text[3])
             {
-                this.Close();
+                Application.Exit();
             }
         }
     }
