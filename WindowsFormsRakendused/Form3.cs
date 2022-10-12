@@ -29,7 +29,6 @@ namespace WindowsFormsRakendused
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(550, 530);
             this.Text = "Sobivus mäng";
-            MessageBox.Show("Sul on kokku 10 katsed", "Sobivus mäng");
 
             tableLayoutPanel1 = new TableLayoutPanel
             {
@@ -38,8 +37,7 @@ namespace WindowsFormsRakendused
                 Font = new Font("Microsoft Sans Serif", 10.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
                 BackColor = Color.CornflowerBlue,                
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset,
-                AutoSize = false,
-                
+                AutoSize = false,                
             };
 
             timerLabel = new Label
@@ -82,6 +80,8 @@ namespace WindowsFormsRakendused
                 {
                     int randomNumber = random.Next(icons.Count);
                     iconLabel.Text = icons[randomNumber];
+
+                    //System.Threading.Thread.Sleep(5000);
                     iconLabel.ForeColor = iconLabel.BackColor;
                     icons.RemoveAt(randomNumber);
                 }
@@ -124,12 +124,11 @@ namespace WindowsFormsRakendused
             secondClicked.ForeColor = secondClicked.BackColor;
             firstClicked = null;
             secondClicked = null;
-            timerLabel.Text = "Katsed: " + tik.ToString();
+            timerLabel.Text = "Katsed: " + (10 - tik).ToString();
             if (tik >= 10)
             {
                 MessageBox.Show("Sa kasutasid kõiki katset!","GAME OVER");
-                Close();
-                this.Controls.Clear();
+                Application.Restart();
             }
         }
         void voiduKontroll()
@@ -144,7 +143,7 @@ namespace WindowsFormsRakendused
                 }
             }
             MessageBox.Show("Sa otsisid välja kõik ikoonid", "Palju õnne! ");
-            Close();
+            Application.Restart();
         }
     }
 }

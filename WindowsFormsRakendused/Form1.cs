@@ -116,7 +116,7 @@ namespace WindowsFormsRakendused
             }
             else if (nupp.Text == "Sulge")
             {
-                this.Close();
+                Application.Restart();
             }
             else if (nupp.Text == "Joonista")
             {                

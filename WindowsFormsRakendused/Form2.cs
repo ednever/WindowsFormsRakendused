@@ -29,14 +29,13 @@ namespace WindowsFormsRakendused
             this.Text = "Matemaatika test";
             this.ClientSize = new Size(500, 400);
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
-            this.MaximizeBox = false;
+            this.MaximizeBox = true;
 
             Random rnd = new Random();
 
             tableLayoutPanel1 = new TableLayoutPanel
             {
-                //ColumnCount = 5,
-                //RowCount = 4,
+                ColumnCount = 6,
                 Location = new Point(0, 150),
                 Size = new Size(500, 250),
                 Font = new Font("Microsoft Sans Serif", 10.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
@@ -114,7 +113,7 @@ namespace WindowsFormsRakendused
                         vastused[i] = new NumericUpDown
                         {
                             Name = tehed[i],
-                            Minimum = -10,
+                            Minimum = -20,
                             Maximum = 200,
                             Size = new Size(100, 50),
                             Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
@@ -143,7 +142,7 @@ namespace WindowsFormsRakendused
             this.Controls.Add(startButton);
             this.Controls.Add(timeLabel);
         }
-        private bool CheckTheAnswer() // vastuste kontroll
+        bool CheckTheAnswer() // vastuste kontroll
         {
             if ((num1[0] + num2[0] == vastused[0].Value)
                 && (num1[1] - num2[1] == vastused[1].Value)
@@ -154,10 +153,16 @@ namespace WindowsFormsRakendused
                 return false;
         }
         int tik = 0;
-        private void timer_Tick(object sender, EventArgs e)
+        void timer_Tick(object sender, EventArgs e)
         {
             tik++;
-            timeLabel.Text = "Timer: " + tik.ToString();
+            timeLabel.Text = "Timer: " + (100 - tik).ToString();
+            if (100 - tik == 0)
+            {
+                timer.Stop();
+                MessageBox.Show("Taim on läbi!");
+                Application.Restart();
+            }
         }
         void startButton_Click(object sender, EventArgs e) //vastuste kontroll
         {
@@ -166,7 +171,7 @@ namespace WindowsFormsRakendused
                 timer.Stop();
                 MessageBox.Show("Kõik vastused on õiged!\nPalju õnne!");
                 startButton.Enabled = true;
-                Close();
+                Application.Restart();
             }
             else // kui vastused ei ole õiged vastuste lahtristesse kirjutatakse õiged vastused
             {

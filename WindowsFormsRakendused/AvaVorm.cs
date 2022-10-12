@@ -13,14 +13,14 @@ namespace WindowsFormsRakendused
     public partial class AvaVorm : Form
     {
         Form[] vormid = new Form[3] {new Form1(), new Form2(),new Form3()}; //massiiv vormidest
-        string[] text = new string[4] { "Piltide vaatamine", "Matemaatika test", "Sobivus mäng", "Sulge" };
+        string[] text = new string[3] { "Piltide vaatamine", "Matemaatika test", "Sobivus mäng"};
         public AvaVorm()
         {
             this.Text = "Pea vorm";
             this.ClientSize = new Size(250, 120);
             this.BackColor = Color.BlanchedAlmond;
             int y = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {                
                 Button openButton = new Button
                 {
@@ -40,10 +40,6 @@ namespace WindowsFormsRakendused
             {
                 if (nupp.Text == text[i])
                     vormid[i].ShowDialog(); //avab vormi vormide massiivist 
-            }
-            if (nupp.Text == text[3])
-            {
-                Application.Exit();
             }
         }
     }
