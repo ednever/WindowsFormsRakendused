@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace WindowsFormsRakendused
 {
@@ -62,8 +63,7 @@ namespace WindowsFormsRakendused
                     tableLayoutPanel1.Controls.Add(l, j, i);
                     l.Click += label_Click;
                 }
-            }
-            
+            }            
             timer = new Timer { Interval = 750 };
             timer.Tick += timer_Tick;
             maaraIkoonidRuutudesse();
@@ -80,15 +80,20 @@ namespace WindowsFormsRakendused
                 {
                     int randomNumber = random.Next(icons.Count);
                     iconLabel.Text = icons[randomNumber];
-
-                    //System.Threading.Thread.Sleep(5000);
                     iconLabel.ForeColor = iconLabel.BackColor;
                     icons.RemoveAt(randomNumber);
                 }
             }
         }
+        int tok = 0;
         void label_Click(object sender, EventArgs e)
-        {            
+        {
+            tok++;
+            if (tok == 100)
+            {
+                MessageBox.Show("Salajane saavutus!");
+                Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+            }
             if (timer.Enabled == true) 
                 return;
             Label clickedLabel = sender as Label;

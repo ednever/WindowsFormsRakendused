@@ -134,7 +134,7 @@ namespace WindowsFormsRakendused
             {
                 if (pictureBox1.Image != null) //если в pictureBox есть изображение
                 {
-                    g.Save();
+                    //g.Save();
                     //using (Graphics g = Graphics.FromImage(pic))
                     //{
                     //PictureBox1_Render(g);

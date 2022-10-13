@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace WindowsFormsRakendused
 {
@@ -14,8 +15,8 @@ namespace WindowsFormsRakendused
     {
         TableLayoutPanel tableLayoutPanel1;
         Timer timer;
-        Label timeLeft, timeLabel;
-        Button startButton;
+        Label timeLabel;
+        Button startButton, calc, close_Button;
 
         NumericUpDown[] vastused = new NumericUpDown[4];
 
@@ -42,15 +43,6 @@ namespace WindowsFormsRakendused
                 BackColor = Color.CornflowerBlue,
             };
 
-            timeLeft = new Label
-            {
-                Location = new Point(0, 0),
-                AutoSize = false,
-                Size = new Size(200, 30),
-                Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(186))),
-                Text = "Time Left",
-            };
-
             timeLabel = new Label
             {
                 Location = new Point(200, 0),
@@ -65,8 +57,14 @@ namespace WindowsFormsRakendused
                 Text = "Kontrolli",
                 Location = new Point(400, 0),
             };
-
             startButton.Click += startButton_Click;
+
+            calc = new Button
+            {
+                Text = "Kalkulaator",
+                Location= new Point(0, 0)
+            };
+            calc.Click += Calc_Click;
 
             for (int i = 0; i < 4; i++)
             {
@@ -138,10 +136,16 @@ namespace WindowsFormsRakendused
             timer.Start();
 
             this.Controls.Add(tableLayoutPanel1);
-            this.Controls.Add(timeLeft);
             this.Controls.Add(startButton);
             this.Controls.Add(timeLabel);
+            this.Controls.Add(calc);
         }
+
+        private void Calc_Click(object sender, EventArgs e)
+        {
+            Process.Start("calc");
+        }
+
         bool CheckTheAnswer() // vastuste kontroll
         {
             if ((num1[0] + num2[0] == vastused[0].Value)
