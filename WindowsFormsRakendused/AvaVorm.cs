@@ -17,7 +17,7 @@ namespace WindowsFormsRakendused
         public AvaVorm()
         {
             this.Text = "Pea vorm";
-            this.ClientSize = new Size(250, 120);
+            this.ClientSize = new Size(250, 90);
             this.BackColor = Color.BlanchedAlmond;
             int y = 0;
             for (int i = 0; i < 3; i++)

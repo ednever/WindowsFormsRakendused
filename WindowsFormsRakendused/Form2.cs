@@ -16,7 +16,7 @@ namespace WindowsFormsRakendused
         TableLayoutPanel tableLayoutPanel1;
         Timer timer;
         Label timeLabel;
-        Button startButton, calc, close_Button;
+        Button startButton, calc;
 
         NumericUpDown[] vastused = new NumericUpDown[4];
 

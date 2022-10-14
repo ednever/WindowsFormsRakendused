@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace WindowsFormsRakendused
 {
@@ -23,7 +24,9 @@ namespace WindowsFormsRakendused
         Label firstClicked, secondClicked = null;
         Label timerLabel;
         Timer timer;
-        
+        TextBox textBox;
+
+
         public Form3()
         {
             this.components = new Container();
@@ -130,11 +133,11 @@ namespace WindowsFormsRakendused
             firstClicked = null;
             secondClicked = null;
             timerLabel.Text = "Katsed: " + (10 - tik).ToString();
-            if (tik >= 10)
-            {
-                MessageBox.Show("Sa kasutasid kõiki katset!","GAME OVER");
-                Application.Restart();
-            }
+            //if (tik >= 10)
+            //{
+            //    MessageBox.Show("Sa kasutasid kõiki katset!", "GAME OVER");
+            //    Application.Restart();
+            //}
         }
         void voiduKontroll()
         {
@@ -148,7 +151,27 @@ namespace WindowsFormsRakendused
                 }
             }
             MessageBox.Show("Sa otsisid välja kõik ikoonid", "Palju õnne! ");
-            Application.Restart();
+            textBox = new TextBox
+            {
+                Location = new Point(0, 0),
+            };
+            this.Controls.Add(textBox);
+            textBox.DoubleClick += TextBox_DoubleClick;
+            //Application.Restart();
+        }
+
+        private void TextBox_DoubleClick(object sender, EventArgs e)
+        {
+            textBox.Enabled = false;
+            string text = textBox.Text;
+
+            using (StreamWriter from_file = new StreamWriter(@"..\..\..\Voitjad.txt"))
+            {
+                if (text != null)
+                {
+                    from_file.WriteLine(text + ", " + tik.ToString() + ";");
+                }
+            }
         }
     }
 }
