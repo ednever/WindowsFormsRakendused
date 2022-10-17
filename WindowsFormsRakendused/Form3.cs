@@ -25,7 +25,7 @@ namespace WindowsFormsRakendused
         Label timerLabel;
         Timer timer;
         TextBox textBox;
-
+        Button voitjad;
 
         public Form3()
         {
@@ -51,6 +51,13 @@ namespace WindowsFormsRakendused
                 Text = "Katsed: "
             };
 
+            voitjad = new Button
+            {
+                Location = new Point(100,0),
+                Text = "Võitjad"
+            };
+            voitjad.Click += Voitjad_Click;
+
             for (int i = 0; i < 4; i++)
             {
                 tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
@@ -71,7 +78,21 @@ namespace WindowsFormsRakendused
             timer.Tick += timer_Tick;
             maaraIkoonidRuutudesse();
             this.Controls.Add(tableLayoutPanel1);
-            this.Controls.Add(timerLabel);            
+            this.Controls.Add(timerLabel); 
+            this.Controls.Add(voitjad);
+        }
+
+        private void Voitjad_Click(object sender, EventArgs e)
+        {
+            StreamReader out_file = new StreamReader(@"..\..\..\Voitjad.txt");
+            string[] words;
+            string text;
+            while ((text = out_file.ReadLine()) != null)
+            {
+                words = text.Split(';');
+                MessageBox.Show(words[0], "Võitjad");
+            }
+            out_file.Close();
         }
 
         void maaraIkoonidRuutudesse()
@@ -92,7 +113,7 @@ namespace WindowsFormsRakendused
         void label_Click(object sender, EventArgs e)
         {
             tok++;
-            if (tok == 100)
+            if (tok == 10)
             {
                 MessageBox.Show("Salajane saavutus!");
                 Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
@@ -133,11 +154,11 @@ namespace WindowsFormsRakendused
             firstClicked = null;
             secondClicked = null;
             timerLabel.Text = "Katsed: " + (10 - tik).ToString();
-            //if (tik >= 10)
-            //{
-            //    MessageBox.Show("Sa kasutasid kõiki katset!", "GAME OVER");
-            //    Application.Restart();
-            //}
+            if (tik >= 10)
+            {
+                MessageBox.Show("Sa kasutasid kõiki katset!", "GAME OVER");
+                Application.Restart();
+            }
         }
         void voiduKontroll()
         {
@@ -169,7 +190,7 @@ namespace WindowsFormsRakendused
             {
                 if (text != null)
                 {
-                    from_file.WriteLine(text + ", " + tik.ToString() + ";");
+                    from_file.WriteLine("\n" + text + ", " + tik.ToString() + "katsed ;");
                 }
             }
         }

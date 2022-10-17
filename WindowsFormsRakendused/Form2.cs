@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Media;
 
 namespace WindowsFormsRakendused
 {
@@ -17,6 +18,7 @@ namespace WindowsFormsRakendused
         Timer timer;
         Label timeLabel;
         Button startButton, calc;
+        OpenFileDialog openFileDialog;
 
         NumericUpDown[] vastused = new NumericUpDown[4];
 
@@ -26,7 +28,7 @@ namespace WindowsFormsRakendused
         string text;
         public Form2()
         {
-            
+
             this.Text = "Matemaatika test";
             this.ClientSize = new Size(500, 400);
             this.FormBorderStyle = FormBorderStyle.Fixed3D;

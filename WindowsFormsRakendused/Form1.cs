@@ -102,8 +102,8 @@ namespace WindowsFormsRakendused
             Button nupp = (Button)sender;
             if (nupp.Text == "Näita")
             {
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                    pictureBox1.Load(openFileDialog1.FileName);
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)                    
+                pictureBox1.Load(openFileDialog1.FileName);
             }
             else if (nupp.Text == "Puhasta")
             { 
@@ -121,10 +121,8 @@ namespace WindowsFormsRakendused
             else if (nupp.Text == "Joonista")
             {                
                 g = pictureBox1.CreateGraphics();
-                //g.DrawImage(pictureBox1.Image, 0, 0);
                 pen = new Pen(Color.Black, 5);
 
-                //pictureBox1.Paint += pictureBox1_Paint;
 
                 pictureBox1.MouseDown += pictureBox1_MouseDown;
                 pictureBox1.MouseMove += pictureBox1_MouseMove;
@@ -134,10 +132,6 @@ namespace WindowsFormsRakendused
             {
                 if (pictureBox1.Image != null) //если в pictureBox есть изображение
                 {
-                    //g.Save();
-                    //using (Graphics g = Graphics.FromImage(pic))
-                    //{
-                    //PictureBox1_Render(g);
                     Bitmap pic = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
 
                     SaveFileDialog savedialog = new SaveFileDialog();
@@ -162,7 +156,6 @@ namespace WindowsFormsRakendused
                             MessageBox.Show("Pole võimalik salvestada pilti", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    //}
                 }
             }
         }
@@ -198,17 +191,5 @@ namespace WindowsFormsRakendused
             x = -1;
             y = -1;
         }
-        //private void PictureBox1_Paint(object sender, PaintEventArgs e)
-        //{
-        //    PictureBox1_Render(e.Graphics);
-        //}
-        //private void PictureBox1_Render(Graphics g)
-        //{
-        //    pictureBox1.MouseDown += pictureBox1_MouseDown;
-        //    pictureBox1.MouseMove += pictureBox1_MouseMove;
-        //    pictureBox1.MouseUp += pictureBox1_MouseUp;
-        //    draw things...         
-        //    g.DrawEllipse(Pens.Red, 0, 0, pictureBox1.ClientSize.Width - 1, pictureBox1.ClientSize.Height - 1);
-        //}
     }    
 }
