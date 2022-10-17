@@ -14,5 +14,6 @@ Projekti sees on kommentaarid eesti keeles.
   
 ### Form3 (Sobivus mäng)
   1. Kokku on 10 katsed, kui kasutasid kõiki siis vorm sulgeb
-  2. "Salajane saavutus" kui klikkida 100 korda ühele pildile siis avab link muusikaga YouTube sees
+  2. "Salajane saavutus" kui klikkida 100 korda ühele pildile siis avab link muusikaga YouTube'is
   3. Kui mäng on läbi saad kirjutada oma nimi, ning sinu nimi koos katsetega kirjutatakse teksti faili
+  4. "Võitjad" nuppu vajutades näitab aknad võitjatega ja nende punktidega
